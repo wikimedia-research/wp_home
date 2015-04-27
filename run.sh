@@ -1,0 +1,1 @@
+export HADOOP_HEAPSIZE=1024 && hive -f retrieve_data.sql > ./data/raw_data.tsv && R CMD BATCH ./R/main.R
