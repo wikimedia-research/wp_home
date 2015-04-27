@@ -4,9 +4,8 @@ geocoded_data['country'] AS country_name, agent_type, COUNT(*) AS requests
 FROM webrequest
 WHERE year = 2015
 AND month = 04
-AND ((day = 19 AND hour = 3) OR (day = 20 AND hour = 9) OR (day = 23 AND hour = 23) OR (day = 25 AND hour = 15)
+AND ((day = 20 AND hour = 3) OR (day = 21 AND hour = 9) OR (day = 23 AND hour = 23) OR (day = 25 AND hour = 15)
 OR (day = 25 AND hour = 18))
-AND hour = 3
 AND webrequest_source IN('text','mobile')
 AND content_type IN('text/html\; charset=ISO-8859-1',
                     'text/html',
