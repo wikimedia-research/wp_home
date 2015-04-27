@@ -12,3 +12,7 @@
 vignettes/*.html
 vignettes/*.pdf
 .Rproj.user
+
+# Presentation crap
+*.html
+*.md

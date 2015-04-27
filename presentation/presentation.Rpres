@@ -5,10 +5,35 @@ date: 2015-05-01
 
 Summary
 ========================================================
-
+type: section
 - The home page is a surprisingly popular location
-- There's a lot of low-hanging fruit to target
-- bg
+- It attracts a diverse audience
+- There's a lot of low-hanging fruit to target!
 
 The Wikipedia home page
 ========================================================
+type: section
+
+http://wikipedia.org
+---
+
+Desktop
+========================================================
+![Screenshot of the desktop home page](desktop_img.png)
+***
+- Dated
+- Overwhelming information
+- Not localised
+
+Mobile
+========================================================
+![Screenshot of the mobile home page](mobile_img.png)
+***
+ - ...uhm.
+ - Auto-redirects to English main page
+ - Pretty prominent systemic bias/diversity problem
+ - Good news: obvious low-hanging fruit!
+ 
+Usage
+========================================================
+type: section
