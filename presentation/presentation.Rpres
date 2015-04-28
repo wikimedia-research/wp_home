@@ -3,13 +3,6 @@ Reader use of the Wikipedia home page
 author: Oliver Keyes
 date: 2015-05-01
 
-Summary
-========================================================
-type: section
-- The home page is a surprisingly popular location
-- It attracts a diverse audience
-- There's a lot of low-hanging fruit to target!
-
 The Wikipedia home page
 ========================================================
 type: section
@@ -43,3 +36,16 @@ type: section
 
 So what do we see?
 ---
+
+By the numbers
+========================================================
+
+- 5.5m requests
+- 185m a week!
+- Mostly/all "pageviews"
+
+Referers
+========================================================
+
+![referers to www.wikipedia.org](referer_data.svg)
+
