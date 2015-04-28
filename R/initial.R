@@ -29,10 +29,23 @@ basic_stats <- function(input){
 }
 
 handle_referers <- function(input){
-  referer_data <- input$referer_data
-  out <- data.frame(variable = c("% of requests with a referer","% from google/other search","% from device firmware"),
-                    value = rep(0,3))
-  out$value[1] <- (sum())
+  make_percentage <- function(x, regex, invert = FALSE){
+    result <- grepl(x = x, pattern = regex)
+    if(invert){
+      sum(x$requests[!result])/sum(x$requests)
+    } else {
+      sum(x$requests[result])/sum(x$requests)
+    }
+  }
+  referer_data <- input$raw_data[,c("referer","requests")]
+  out <- data.frame(variable = c("% with a referer","% from google/other search","% from device firmware",
+                                 "% internal", "% social"),
+                    value = rep(0,5))
+  out$value[1] <- make_percentage(referer_data,"-",TRUE)
+  out$value[2] <- make_percentage(referer_data, firmware_regex)
+  out$value[3] <- make_percentage(referer_data, search_regex)
+  out$value[4] <- make_percentage(referer_data, internal_regex)
+  out$value[5] <- make_percentage(referer_data, social_regex)
 }
 (function(){
   read_in %>%
