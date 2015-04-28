@@ -16,3 +16,7 @@ vignettes/*.pdf
 # Presentation crap
 *.html
 *.md
+
+# Raw data
+data/initial_data.tsv
+*.RData
