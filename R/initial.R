@@ -58,7 +58,11 @@ read_in <- function(){
 }
 
 basic_stats <- function(input){
-  
+  out <- data.frame(variable = c("Requests (sample period)","Requests (1 week)", "Requests (1 month)"),
+                    value = rep(0,3), stringsAsFactors = FALSE)
+  out$value[1] <- sum(input$raw_data$requests)
+  out$value[2] <- (out$value[1]/5)*168
+  write_tsv(out, file = "../data/summary_data.tsv")
 }
 
 handle_referers <- function(input){
@@ -96,5 +100,6 @@ handle_referers <- function(input){
   read_in %>%
     basic_stats %>%
     handle_referers %>%
+    geographic
   q()
 })()
