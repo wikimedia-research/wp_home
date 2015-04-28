@@ -7,6 +7,9 @@ suppressPackageStartupMessages({
   library(readr)
   library(olivr)
   library(magrittr)
+  library(scales)
+  library(ggplot2)
+  library(RColorBrewer)
 })
 
 firmware_regex <- "(browser\\.ovi\\.com|xpress\\.nokia\\.com)"

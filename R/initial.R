@@ -1,5 +1,38 @@
 source("config.R")
 
+plot_theme <- function(){
+  palette <- brewer.pal("Greys", n=9)
+  color.background = palette[2]
+  color.grid.major = palette[3]
+  color.axis.text = palette[6]
+  color.axis.title = palette[7]
+  color.title = palette[9]
+  
+  # Begin construction of chart
+  theme_bw(base_size=9) +
+    
+    # Set the entire chart region to a light gray color
+    theme(panel.background=element_rect(fill=color.background, color=color.background)) +
+    theme(plot.background=element_rect(fill=color.background, color=color.background)) +
+    theme(panel.border=element_rect(color=color.background)) +
+    
+    # Format the grid
+    theme(panel.grid.major=element_line(color=color.grid.major,size=.25)) +
+    theme(panel.grid.minor=element_blank()) +
+    theme(axis.ticks=element_blank()) +
+    
+    # Format the legend, but hide by default
+    theme(legend.position="none") +
+    theme(legend.background = element_rect(fill=color.background)) +
+    theme(legend.text = element_text(size=7,color=color.axis.title)) +
+    
+    # Set title and axis labels, and format these and tick marks
+    theme(plot.title=element_text(color=color.title, size=14, hjust=0.1)) +
+    theme(axis.text.x=element_text(size=14,color=color.axis.text)) +
+    theme(axis.text.y=element_text(size=14,color=color.axis.text)) +
+    theme(axis.title.x=element_text(size=12,color=color.axis.title, vjust=0)) +
+    theme(axis.title.y=element_text(size=12,color=color.axis.title, vjust=1.25))
+}
 #Read in, sanitise and extract aggregates
 read_in <- function(){
   
@@ -30,7 +63,7 @@ basic_stats <- function(input){
 
 handle_referers <- function(input){
   make_percentage <- function(x, regex, invert = FALSE){
-    result <- grepl(x = x, pattern = regex)
+    result <- grepl(x = x$referer, pattern = regex)
     if(invert){
       sum(x$requests[!result])/sum(x$requests)
     } else {
@@ -38,15 +71,27 @@ handle_referers <- function(input){
     }
   }
   referer_data <- input$raw_data[,c("referer","requests")]
-  out <- data.frame(variable = c("% with a referer","% from google/other search","% from device firmware",
-                                 "% internal", "% social"),
+  out <- data.frame(variable = c("% with a referer","% with referer, from google/other search","% with referer, from device firmware",
+                                 "% with referer, internal", "% with referer, from social"),
                     value = rep(0,5))
   out$value[1] <- make_percentage(referer_data,"-",TRUE)
+  referer_data <- referer_data[!referer_data$referer == "-",]
   out$value[2] <- make_percentage(referer_data, firmware_regex)
   out$value[3] <- make_percentage(referer_data, search_regex)
   out$value[4] <- make_percentage(referer_data, internal_regex)
   out$value[5] <- make_percentage(referer_data, social_regex)
+  write_tsv(out, filename = "../data/referer_data.tsv")
+  ggsave(filename = "../presentation/referer_data.svg",
+         plot = ggplot(out[2:nrow(out),], aes(reorder(variable, value),value*100)) +
+           geom_bar(stat = "identity", fill = "#009E73") +
+           labs(title = "Traffic to www.wikipedia.org",
+                x = "Class",
+                y = "Percentage") +
+           coord_flip() + 
+           plot_theme())
+  return(input)
 }
+
 (function(){
   read_in %>%
     basic_stats %>%
