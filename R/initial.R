@@ -96,10 +96,14 @@ handle_referers <- function(input){
   return(input)
 }
 
+geographic <- function(input){
+  
+}
 (function(){
   read_in %>%
     basic_stats %>%
     handle_referers %>%
     geographic
+  
   q()
 })()
