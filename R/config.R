@@ -10,6 +10,11 @@ suppressPackageStartupMessages({
   library(scales)
   library(ggplot2)
   library(RColorBrewer)
+  library(maptools) #Mapping dependency
+  library(rgeos) #Mapping dependency
+  library(rworldmap) #SpatialPolygonDataFrame creation.
+  library(gridExtra)
+  library(mapproj) #mollweide projection
 })
 
 firmware_regex <- "(browser\\.ovi\\.com|xpress\\.nokia\\.com)"

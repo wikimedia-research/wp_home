@@ -50,6 +50,42 @@ Referers
 
 ![referers to www.wikipedia.org](referer_data.svg)
 
+
 Geography
 ========================================================
 
+![traffic to WP sites](all_countries.svg)
+
+Geography
+========================================================
+![traffic to www.wikipedia.org](home_countries.svg)
+
+Summary
+========================================================
+
+- Home page users get a substandard experience on mobile and on desktop
+- If we counted the home page in pageview counts - just the wikipedia one - we'd instantly increase pageviews 4%
+- home page traffic is massively biased towards areas of the world (South America, Indian subcontinent) we should be focusing on.
+
+Going forward
+========================================================
+type: section
+
+What we should find out
+========================================================
+
+- Where do people go from the home page?
+- How do people use the home page? (search? direct clicks?)
+- How does their behaviour compare to "directly" sourced traffic?
+- What does the mobile/desktop disparity look like?
+
+How we find that out
+========================================================
+
+- EventLogging schema across users
+- Fix the en.wikipedia.org redirect
+- Survey(?)
+
+Questions? Questions!
+========================================================
+type: section

@@ -97,7 +97,40 @@ handle_referers <- function(input){
 }
 
 geographic <- function(input){
+  input_countries <- summarise(group_by(input$raw_data[!is.na(input$raw_data),], country_iso),sum(requests))
+  benchmark_countries <- read.delim("../data/benchmark_data.tsv", as.is = TRUE, header = TRUE, quote = "")
   
+  dt_geo_plot <- function(dt, title){
+    suppressMessages({
+      names(dt)[1:2] <- c("country","count")
+      cdm <- joinCountryData2Map(dt, joinCode = "ISO2", nameJoinColumn = "country", suggestForFailedCodes = TRUE)
+      missing_countries <- unique(cdm$ISO_A2[!(cdm$ISO_A2 %in% dt$country)])
+      if(length(missing_countries) >= 1){
+        dt <- rbind(dt, data.frame(country = missing_countries, count=0))
+      }
+      cdm <- joinCountryData2Map(dt, joinCode = "ISO2", nameJoinColumn = "country", suggestForFailedCodes=TRUE)
+      values <- as.data.frame(cdm[,c("count", "country")])
+      names(values) <- c("count", "id")
+      values <- unique(values)
+      fortified_polygons <- fortify(cdm, region = "country")
+      ggplot(values) + 
+        geom_map(aes(fill = count, map_id = id),
+                 map = fortified_polygons) +
+        expand_limits(x = fortified_polygons$long,
+                      y = fortified_polygons$lat) +
+        coord_equal() + 
+        coord_map(projection="mollweide") +
+        labs(title = title,
+             x = "Longitude",
+             y = "Latitude") +
+        scale_fill_gradientn(colours=brewer.pal(9, "Blues")[3:8])
+    })
+  }
+  ggsave(filename = "../presentation/home_countries.svg",
+         plot = dt_geo_plot(input_countries, "Geographic diversity of www.wikipedia.org traffic"))
+  ggsave(filename = "../presentation/home_countries.svg",
+         plot = dt_geo_plot(benchmark_countries, "Geographic diversity of all pageviews"))
+  return(invisible())
 }
 (function(){
   read_in %>%

@@ -19,4 +19,5 @@ vignettes/*.pdf
 
 # Raw data
 data/initial_data.tsv
+data/benchmark_data.tsv
 *.RData
